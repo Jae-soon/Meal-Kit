@@ -1,6 +1,7 @@
 package com.js.mealkitecommerce.app.controller;
 
 import com.js.mealkitecommerce.app.dto.JoinForm;
+import com.js.mealkitecommerce.app.dto.LoginForm;
 import com.js.mealkitecommerce.app.entity.Customer;
 import com.js.mealkitecommerce.app.exception.EmailDuplicatedException;
 import com.js.mealkitecommerce.app.global.util.Util;
@@ -68,4 +69,10 @@ public class customerController {
         String loginMsg = "로그인 되었습니다";
         return "redirect:/member/profile?msg=%s".formatted(loginMsg);
     }
+
+    @GetMapping("/login")
+    public String showLogin(@ModelAttribute LoginForm loginForm) {
+        return "customer/login";
+    }
+
 }

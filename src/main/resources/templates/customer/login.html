@@ -1,0 +1,16 @@
+<h1>로그인 페이지</h1>
+
+<form th:object="${loginForm}" method="post">
+    <div th:replace="~{/global/form_errors :: formErrorsFragment}"></div>
+    <div>
+      <span>아이디</span>
+      <input type="text" th:field="*{userId}" placeholder="아이디를 입력해주세요.">
+    </div>
+    <div>
+      <span>비밀번호</span>
+      <input type="password" th:field="*{password}">
+    </div>
+    <div>
+      <input type="submit" value="로그인" />
+    </div>
+</form>
