@@ -34,7 +34,7 @@ public class customerController {
             return "customer/join";
         }
 
-        Customer oldCustomer = customerService.findCustomerByUserId(joinForm.getUserId());
+        Customer oldCustomer = customerService.findCustomerByUsername(joinForm.getUsername());
 
         if(oldCustomer != null) {
             String msg = Util.url.encode("이미 존재하는 회원입니다..");
@@ -58,14 +58,19 @@ public class customerController {
             return "customer/join";
         }
 
-
         try {
             req.login(joinForm.getUsername(), joinForm.getPassword());
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
 
-        String loginMsg = "로그인 되었습니다";
-        return "redirect:/member/profile?msg=%s".formatted(loginMsg);
+        String loginMsg = Util.url.encode("로그인 되었습니다");
+        return "redirect:/customer/profile?msg=%s".formatted(loginMsg);
     }
+
+    @GetMapping("/login")
+    public String showLogin() {
+        return "customer/login";
+    }
+
 }
