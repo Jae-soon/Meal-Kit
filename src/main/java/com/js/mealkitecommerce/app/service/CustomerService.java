@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
-    public Customer findCustomerByUserId(String userId) {
-        return customerRepository.findCustomerByUserId(userId).orElse(null);
+    public Customer findCustomerByUsername(String username) {
+        return customerRepository.findByUsername(username).orElse(null);
     }
 
     public Customer join(JoinForm joinForm) {
         Customer customer = Customer.builder()
+                .name(joinForm.getName())
                 .username(joinForm.getUsername())
-                .userId(joinForm.getUserId())
                 .password(passwordEncoder.encode(joinForm.getPassword()))
                 .email(joinForm.getEmail())
                 .address(joinForm.getAddress())
