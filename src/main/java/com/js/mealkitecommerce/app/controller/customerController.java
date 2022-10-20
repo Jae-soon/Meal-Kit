@@ -6,6 +6,7 @@ import com.js.mealkitecommerce.app.exception.EmailDuplicatedException;
 import com.js.mealkitecommerce.app.global.util.Util;
 import com.js.mealkitecommerce.app.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +24,13 @@ import javax.validation.Valid;
 public class customerController {
     private final CustomerService customerService;
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/join")
     public String showJoin(@ModelAttribute JoinForm joinForm) {
         return "customer/join";
     }
 
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
     public String join(HttpServletRequest req, @Valid JoinForm joinForm, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -68,6 +71,7 @@ public class customerController {
         return "redirect:/customer/profile?msg=%s".formatted(loginMsg);
     }
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
     public String showLogin() {
         return "customer/login";
