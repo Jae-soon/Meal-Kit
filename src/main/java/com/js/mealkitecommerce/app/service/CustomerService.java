@@ -1,7 +1,10 @@
 package com.js.mealkitecommerce.app.service;
 
-import com.js.mealkitecommerce.app.dto.JoinForm;
+import com.js.mealkitecommerce.app.dto.Customer.JoinForm;
+import com.js.mealkitecommerce.app.dto.Customer.ModifyForm;
+import com.js.mealkitecommerce.app.dto.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
+import com.js.mealkitecommerce.app.exception.DataNotFoundException;
 import com.js.mealkitecommerce.app.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,5 +32,17 @@ public class CustomerService {
         customerRepository.save(customer);
 
         return customer;
+    }
+
+    public void modify(CustomerContext context, ModifyForm modifyForm) {
+        Customer customer = customerRepository.findByUsername(context.getUsername()).orElseThrow(
+                () -> new DataNotFoundException("Customer Not Found"));
+
+        customer.setName(modifyForm.getName());
+        customer.setEmail(modifyForm.getEmail());
+        customer.setAddress(modifyForm.getAddress());
+        customer.setTel(modifyForm.getTel());
+
+        customerRepository.save(customer);
     }
 }
