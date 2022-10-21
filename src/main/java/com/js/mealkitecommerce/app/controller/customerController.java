@@ -4,6 +4,7 @@ import com.js.mealkitecommerce.app.dto.Customer.JoinForm;
 import com.js.mealkitecommerce.app.dto.Customer.ModifyForm;
 import com.js.mealkitecommerce.app.dto.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
+import com.js.mealkitecommerce.app.exception.DataNotFoundException;
 import com.js.mealkitecommerce.app.exception.EmailDuplicatedException;
 import com.js.mealkitecommerce.app.global.util.Util;
 import com.js.mealkitecommerce.app.service.CustomerService;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +29,18 @@ import javax.validation.Valid;
 @RequestMapping("/customer")
 public class customerController {
     private final CustomerService customerService;
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile")
+    public String showProfile(@AuthenticationPrincipal CustomerContext context, Model model) {
+        Customer customer = customerService.findByUsername(context.getUsername()).orElseThrow(
+                () -> new DataNotFoundException("Customer Not Found")
+        );
+
+        model.addAttribute("customer", customer);
+
+        return "customer/profile";
+    }
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/join")

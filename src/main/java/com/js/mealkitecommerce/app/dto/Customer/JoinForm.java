@@ -1,11 +1,14 @@
 package com.js.mealkitecommerce.app.dto.Customer;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
+@AllArgsConstructor
 public class JoinForm {
     @NotBlank(message = "이름을 입력해주세요.")
     private String name;

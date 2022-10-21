@@ -10,13 +10,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public Optional<Customer> findByUsername(String username) {
+        return customerRepository.findByUsername(username);
+    }
     public Customer findCustomerByUsername(String username) {
-        return customerRepository.findByUsername(username).orElse(null);
+        return findByUsername(username).orElse(null);
     }
 
     public Customer join(JoinForm joinForm) {
