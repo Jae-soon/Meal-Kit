@@ -6,10 +6,10 @@ import com.js.mealkitecommerce.app.dto.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
 import com.js.mealkitecommerce.app.exception.DataNotFoundException;
 import com.js.mealkitecommerce.app.exception.EmailDuplicatedException;
+import com.js.mealkitecommerce.app.exception.UserIdDuplicatedException;
 import com.js.mealkitecommerce.app.global.util.Util;
 import com.js.mealkitecommerce.app.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -55,11 +55,12 @@ public class customerController {
             return "customer/join";
         }
 
-        Customer oldCustomer = customerService.findCustomerByUsername(joinForm.getUsername());
+        if (customerService.findByUsername(joinForm.getUsername()).isPresent()) {
+            throw new UserIdDuplicatedException("중복된 아이디가 존재합니다.");
+        }
 
-        if (oldCustomer != null) {
-            String msg = Util.url.encode("이미 존재하는 회원입니다..");
-            return "redirect:/customer/join?errorMsg=%s".formatted(msg);
+        if (customerService.findByEmail(joinForm.getEmail()).isPresent()) {
+            throw new UserIdDuplicatedException("중복된 이메일이 존재합니다.");
         }
 
         if (!joinForm.getPassword().equals(joinForm.getPasswordConfirm())) {
@@ -73,6 +74,8 @@ public class customerController {
         } catch (EmailDuplicatedException e) {
             bindingResult.reject("SignUpEmailDuplicated", e.getMessage());
             return "customer/join";
+        } catch(UserIdDuplicatedException e) {
+            bindingResult.reject("SignUpUserIdDuplicated", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             bindingResult.reject("SignUpFailed", e.getMessage());
@@ -108,11 +111,22 @@ public class customerController {
             return "customer/modify";
         }
 
+        if (customerService.findByUsername(modifyForm.getUsername()).isPresent()) {
+            throw new UserIdDuplicatedException("중복된 아이디가 존재합니다.");
+        }
+
+        if (customerService.findByEmail(modifyForm.getEmail()).isPresent()) {
+            throw new UserIdDuplicatedException("중복된 이메일이 존재합니다.");
+        }
+
+
         try {
             customerService.modify(context, modifyForm);
         } catch(EmailDuplicatedException e) {
             bindingResult.reject("SignUpEmailDuplicated", e.getMessage());
             return "customer/modify";
+        } catch(UserIdDuplicatedException e) {
+            bindingResult.reject("SignUpUserIdDuplicated", e.getMessage());
         }
 
         String modifyMsg = Util.url.encode("회원정보 수정이 완료되었습니다");

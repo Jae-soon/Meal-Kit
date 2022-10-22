@@ -21,8 +21,9 @@ public class CustomerService {
     public Optional<Customer> findByUsername(String username) {
         return customerRepository.findByUsername(username);
     }
-    public Customer findCustomerByUsername(String username) {
-        return findByUsername(username).orElse(null);
+
+    public Optional<Customer> findByEmail(String email) {
+        return customerRepository.findByEmail(email);
     }
 
     public Customer join(JoinForm joinForm) {
