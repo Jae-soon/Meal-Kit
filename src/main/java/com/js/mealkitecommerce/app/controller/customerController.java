@@ -10,7 +10,6 @@ import com.js.mealkitecommerce.app.exception.UserIdDuplicatedException;
 import com.js.mealkitecommerce.app.global.util.Util;
 import com.js.mealkitecommerce.app.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
