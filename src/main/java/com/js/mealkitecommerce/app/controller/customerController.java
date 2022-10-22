@@ -2,6 +2,7 @@ package com.js.mealkitecommerce.app.controller;
 
 import com.js.mealkitecommerce.app.dto.Customer.JoinForm;
 import com.js.mealkitecommerce.app.dto.Customer.ModifyForm;
+import com.js.mealkitecommerce.app.dto.Customer.ModifyPasswordForm;
 import com.js.mealkitecommerce.app.dto.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
 import com.js.mealkitecommerce.app.exception.DataNotFoundException;
@@ -12,6 +13,7 @@ import com.js.mealkitecommerce.app.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,7 @@ import javax.validation.Valid;
 @RequestMapping("/customer")
 public class customerController {
     private final CustomerService customerService;
+    private final PasswordEncoder passwordEncoder;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
@@ -131,5 +134,29 @@ public class customerController {
 
         String modifyMsg = Util.url.encode("회원정보 수정이 완료되었습니다");
         return "redirect:/customer/profile?msg=%s".formatted(modifyMsg);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/modifyPassword")
+    public String showModifyPassword(@ModelAttribute ModifyPasswordForm modifyPasswordForm) {
+
+        return "customer/modifyPassword";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modifyPassword")
+    public String modifyPassword(@AuthenticationPrincipal CustomerContext context, String password, String modifyPassword) {
+        Customer loginedCustomer = customerService.findByUsername(context.getUsername()).orElseThrow(
+                () -> new DataNotFoundException("Customer Not Found")
+        );
+
+        if(!passwordEncoder.matches(password, loginedCustomer.getPassword())) {
+            String msg = Util.url.encode("현재 비밀번호가 틀립니다.");
+            return "redirect:/member/modifyPassword?msg=%s".formatted(msg);
+        }
+
+        customerService.modifyPassword(loginedCustomer, modifyPassword);
+
+        return "redirect:/customer/profile";
     }
 }

@@ -52,4 +52,11 @@ public class CustomerService {
 
         customerRepository.save(customer);
     }
+
+    public void modifyPassword(Customer customer, String modifyPassword) {
+        String encodePassword = passwordEncoder.encode(modifyPassword);
+        customer.setPassword(encodePassword);
+
+        customerRepository.save(customer);
+    }
 }
