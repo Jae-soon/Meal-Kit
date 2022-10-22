@@ -59,4 +59,15 @@ public class CustomerService {
 
         customerRepository.save(customer);
     }
+
+    public Optional<Customer> findByUsernameAndEmail(String username, String email) {
+        return customerRepository.findByUsernameAndEmail(username, email);
+    }
+
+    public void setNewPassword(Customer customer, String newPassword) {
+        String encodePassword = passwordEncoder.encode(newPassword);
+        customer.setPassword(encodePassword);
+
+        customerRepository.save(customer);
+    }
 }
