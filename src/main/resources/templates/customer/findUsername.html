@@ -1,0 +1,15 @@
+<h1>아이디 찾기</h1>
+
+<form th:action="@{/customer/findUsername}" th:object="${findUsernameForm}" method="POST">
+    <div th:replace="~{/global/form_errors :: formErrorsFragment}"></div>
+    <div>
+        <span>이메일</span>
+        <input type="email" th:field="*{email}">
+    </div>
+    <div>
+        <span>찾기</span>
+        <input type="submit" value="찾기">
+    </div>
+</form>
+
+<span th:if="${customer != null}" th:text="${customer.username}"></span>

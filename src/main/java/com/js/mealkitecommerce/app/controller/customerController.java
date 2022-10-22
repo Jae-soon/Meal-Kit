@@ -1,5 +1,6 @@
 package com.js.mealkitecommerce.app.controller;
 
+import com.js.mealkitecommerce.app.dto.Customer.FindUsernameForm;
 import com.js.mealkitecommerce.app.dto.Customer.JoinForm;
 import com.js.mealkitecommerce.app.dto.Customer.ModifyForm;
 import com.js.mealkitecommerce.app.dto.Customer.ModifyPasswordForm;
@@ -158,5 +159,21 @@ public class customerController {
         customerService.modifyPassword(loginedCustomer, modifyPassword);
 
         return "redirect:/customer/profile";
+    }
+
+    @GetMapping("/findUsername")
+    public String showFindUsername(@ModelAttribute FindUsernameForm findUsernameForm) {
+        return "customer/findUsername";
+    }
+
+    @PostMapping("/findUsername")
+    public String findUsername(Model model, String email) {
+        Customer customer = customerService.findByEmail(email).orElseThrow(
+                () -> new DataNotFoundException("등록된 아이디가 존재하지 않습니다.")
+        );
+
+        model.addAttribute("customer", customer);
+
+        return "member/findUsername";
     }
 }
