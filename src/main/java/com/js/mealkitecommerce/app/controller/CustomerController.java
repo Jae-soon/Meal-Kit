@@ -30,7 +30,7 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/customer")
-public class customerController {
+public class CustomerController {
     private final CustomerService customerService;
     private final PasswordEncoder passwordEncoder;
 
