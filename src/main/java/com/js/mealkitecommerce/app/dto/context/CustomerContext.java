@@ -30,4 +30,18 @@ public class CustomerContext extends User {
         this.address = customer.getAddress();
         this.tel = customer.getTel();
     }
+
+    public Customer getCustomer() {
+        return Customer
+                .builder()
+                .id(id)
+                .createDate(createDate)
+                .modifyDate(modifyDate)
+                .username(username)
+                .name(name)
+                .email(email)
+                .address(address)
+                .tel(tel)
+                .build();
+    }
 }
