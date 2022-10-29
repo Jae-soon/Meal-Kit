@@ -19,8 +19,8 @@ public class MaterialService {
     private final MaterialKeywordService materialKeywordService;
     private final MaterialRepository materialRepository;
 
-    public void applyHashTags(Material material, String materialContents) {
-        List<Material> oldMaterials = getMaterials(material);
+    public void applyMaterial(Kit kit, String materialContents) {
+        List<Material> oldMaterials = getMaterials(kit);
 
         List<String> keywordContents = Arrays.stream(materialContents.split(","))
                 .map(String::trim)
@@ -42,33 +42,35 @@ public class MaterialService {
         });
 
         keywordContents.forEach(keywordContent -> {
-            saveHashTag(material, keywordContent);
+            saveMaterial(kit, keywordContent);
         });
     }
 
-    private Material saveHashTag(Kit kit, String keywordContent) {
+    private Material saveMaterial(Kit kit, String keywordContent) {
         MaterialKeyword keyword = materialKeywordService.save(keywordContent);
 
-        Optional<Material> opHashTag = materialRepository.findByMaterialIdAndMaterialKeywordId(material.getId(), keyword.getId());
+        Optional<Material> opMaterial = materialRepository.findByKitIdAndMaterialKeywordId(kit.getId(), keyword.getId());
 
-        if (opHashTag.isPresent()) {
-            return opHashTag.get();
+        if (opMaterial.isPresent()) {
+            return opMaterial.get();
         }
 
-        PostHashTag hashTag = PostHashTag.builder()
-                .member(post.getMember())
-                .post(post)
-                .postKeyword(keyword)
+        Material material = Material.builder()
+                .kit(kit)
+                .materialKeyword(keyword)
                 .build();
 
-        postHashTagRepository.save(hashTag);
+        materialRepository.save(material);
 
-        return hashTag;
+        return material;
     }
 
-    private List<Material> getMaterials(Material material) {
-        return materialRepository.findAllByMaterialId(material.getId());
+    private List<Material> getMaterials(Kit kit) {
+        return materialRepository.findAllByKitId(kit.getId());
     }
 
 
+    public List<Material> getMaterialsByKitIdIn(long[] ids) {
+        return materialRepository.findAllByKitIdIn(ids);
+    }
 }

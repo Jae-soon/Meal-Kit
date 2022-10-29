@@ -20,10 +20,12 @@ import javax.persistence.ManyToOne;
 @ToString(callSuper = true)
 public class Allergy extends BaseEntity {
     @ManyToOne
+    @ToString.Exclude
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Kit kit;
 
     @ManyToOne
     @ToString.Exclude
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private AllergyKeyword allergyKeyword;
 }
