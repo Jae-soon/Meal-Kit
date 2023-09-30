@@ -138,15 +138,6 @@ public class CustomerController {
             return "customer/modify";
         }
 
-        if (customerService.findByUsername(modifyForm.getUsername()).isPresent()) {
-            throw new UserIdDuplicatedException("중복된 아이디가 존재합니다.");
-        }
-
-        if (customerService.findByEmail(modifyForm.getEmail()).isPresent()) {
-            throw new EmailDuplicatedException("중복된 이메일이 존재합니다.");
-        }
-
-
         try {
             customerService.modify(context, modifyForm);
         } catch(EmailDuplicatedException e) {

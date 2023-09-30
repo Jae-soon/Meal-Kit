@@ -14,7 +14,8 @@
     </div>
     <div>
         <span>이메일</span>
-        <input type="text" th:field="${c.email}" placeholder="이메일을 입력해주세요.">
+        <input id="email" type="text" th:field="${c.email}" placeholder="이메일을 입력해주세요.">
+        <input type="button" value="중복확인" onclick="checkDuplicateEmail()">
     </div>
     <div>
         <span>주소</span>
