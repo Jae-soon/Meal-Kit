@@ -1,6 +1,27 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <script>
+    function checkDuplicateUsername() {
+        var username = document.getElementById("username");
+        var usernameValue = username.value;
+
+        $.ajax({
+            url : "checkUsername",
+            data : {
+                "param" : usernameValue
+            },
+            success : function rstData(data) {
+                console.log(data)
+                if(data.id != null) {
+                    alert("즁복된 아이디가 있습니다");
+                    emailValue = "";
+                } else {
+                    alert("사용 가능한 아이디입니다!");
+                }
+            }
+        })
+    }
+
     function checkDuplicateEmail() {
         var email = document.getElementById("email");
         var emailValue = email.value;
@@ -42,7 +63,8 @@
     </div>
     <div>
         <span>아이디</span>
-        <input type="text" th:field="*{username}" placeholder="아이디를 입력해주세요.">
+        <input id="username" type="text" th:field="*{username}" placeholder="아이디를 입력해주세요.">
+        <input type="button" value="중복 확인" onclick="checkDuplicateUsername()">
     </div>
     <div>
         <span>비밀번호</span>

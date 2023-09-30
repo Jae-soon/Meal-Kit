@@ -61,6 +61,14 @@ public class CustomerController {
         return customer;
     }
 
+    @GetMapping("/checkUsername")
+    @ResponseBody
+    public Customer checkDuplicateUsername(SingleParamVO param) {
+        Customer customer = customerService.findByUsername(param.getParam()).orElse(null);
+
+        return customer;
+    }
+
     @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
     public String join(HttpServletRequest req, @Valid JoinRequestVO joinForm, BindingResult bindingResult) {
