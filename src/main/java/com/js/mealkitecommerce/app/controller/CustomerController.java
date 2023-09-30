@@ -18,10 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -52,13 +49,21 @@ public class CustomerController {
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/join")
-    public String showJoin(@ModelAttribute JoinForm joinForm) {
+    public String showJoin(@ModelAttribute("joinForm") JoinRequestVO joinForm) {
         return "customer/join";
+    }
+
+    @GetMapping("/checkEmail")
+    @ResponseBody
+    public Customer checkDuplicateEmail(SingleParamVO param) {
+        Customer customer = customerService.findByEmail(param.getParam()).orElse(null);
+
+        return customer;
     }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
-    public String join(HttpServletRequest req, @Valid JoinForm joinForm, BindingResult bindingResult) {
+    public String join(HttpServletRequest req, @Valid JoinRequestVO joinForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "customer/join";
         }
@@ -124,6 +129,15 @@ public class CustomerController {
         if (bindingResult.hasErrors()) {
             return "customer/modify";
         }
+
+        if (customerService.findByUsername(modifyForm.getUsername()).isPresent()) {
+            throw new UserIdDuplicatedException("중복된 아이디가 존재합니다.");
+        }
+
+        if (customerService.findByEmail(modifyForm.getEmail()).isPresent()) {
+            throw new EmailDuplicatedException("중복된 이메일이 존재합니다.");
+        }
+
 
         try {
             customerService.modify(context, modifyForm);
