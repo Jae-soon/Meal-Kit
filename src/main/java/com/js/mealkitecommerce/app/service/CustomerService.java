@@ -1,7 +1,6 @@
 package com.js.mealkitecommerce.app.service;
 
-import com.js.mealkitecommerce.app.model.VO.Customer.JoinForm;
-import com.js.mealkitecommerce.app.model.VO.Customer.ModifyCustomerVO;
+import com.js.mealkitecommerce.app.model.VO.Customer.JoinRequestVO;
 import com.js.mealkitecommerce.app.model.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
 import com.js.mealkitecommerce.app.exception.DataNotFoundException;
@@ -26,7 +25,7 @@ public class CustomerService {
         return customerRepository.findByEmail(email);
     }
 
-    public Customer join(JoinForm joinForm) {
+    public Customer join(JoinRequestVO joinForm) {
         Customer customer = Customer.builder()
                 .name(joinForm.getName())
                 .username(joinForm.getUsername())
