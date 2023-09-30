@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{global/layouts/layout}">
+
+<div layout:fragment="content">
 <h1>아이디 찾기</h1>
 
 <form th:action="@{/customer/findUsername}" th:object="${findUsernameForm}" method="POST">
@@ -14,3 +21,5 @@
 </form>
 
 <span th:if="${customer != null}" th:text="${customer.username}"></span>
+</div>
+</html>

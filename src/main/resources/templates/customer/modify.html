@@ -1,17 +1,11 @@
-<script>
-    function modifyConfirm() {
-        if(!confirm("수정하시겠습니까?")) {
-            return false;
-        } else {
-            document.getElementById("modifyForm").submit();
-            alert("수정이 완료되었습니다!");
-        }
-    }
-</script>
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{global/layouts/layout}">
 
-
+<div layout:fragment="content">
 <h1>회원수정 폼</h1>
-
 
 <form id="modifyForm" th:action="@{/customer/modify}" method="post">
     <div>
@@ -35,3 +29,18 @@
     </div>
     <a href="/" class="inline-flex">홈으로</a>
 </form>
+</div>
+
+<div layout:fragment="script">
+    <script>
+        function modifyConfirm() {
+            if(!confirm("수정하시겠습니까?")) {
+                return false;
+            } else {
+                document.getElementById("modifyForm").submit();
+                alert("수정이 완료되었습니다!");
+            }
+        }
+    </script>
+</div>
+</html>

@@ -6,7 +6,7 @@
         <a href="/customer/profile" class="inline-flex" sec:authorize="isAuthenticated()">프로필</a>
         <a href="/customer/login" class="inline-flex" sec:authorize="isAnonymous()">로그인</a>
         <a href="/customer/join" class="inline-flex" sec:authorize="isAnonymous()">회원가입</a>
-        <a href="javascript: document.logoutForm.submit();" class="inline-flex" sec:authorize="isAuthenticated()">로그아웃</a>.
+        <a href="javascript: document.logoutForm.submit();" class="inline-flex" sec:authorize="isAuthenticated()">로그아웃</a>
         <form name="logoutForm" th:action="@{/customer/logout}" method="post" hidden></form>
         <a href="/customer/modify" class="inline-flex" sec:authorize="isAuthenticated()">정보수정</a>
     </nav>

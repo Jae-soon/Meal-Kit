@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{global/layouts/layout}">
+
+<div layout:fragment="content">
 <h1>로그인 페이지</h1>
 
 <form th:action="@{/customer/login}" method="post">
@@ -21,3 +28,5 @@
     <a href="/customer/findPassword" class="inline-flex">비밀번호 찾기</a>
     <a href="/" class="inline-flex">홈으로</a>
 </form>
+</div>
+</html>
