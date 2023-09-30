@@ -55,6 +55,9 @@ dependencies {
 
     // RandomStringUtils
     implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+    // flyway
+    // implementation 'org.flywaydb:flyway-core'
 }
 
 tasks.named('test') {

@@ -1,8 +1,8 @@
 package com.js.mealkitecommerce.app.service;
 
-import com.js.mealkitecommerce.app.dto.Customer.JoinForm;
-import com.js.mealkitecommerce.app.dto.Customer.ModifyForm;
-import com.js.mealkitecommerce.app.dto.context.CustomerContext;
+import com.js.mealkitecommerce.app.model.VO.Customer.JoinForm;
+import com.js.mealkitecommerce.app.model.VO.Customer.ModifyCustomerVO;
+import com.js.mealkitecommerce.app.model.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
 import com.js.mealkitecommerce.app.exception.DataNotFoundException;
 import com.js.mealkitecommerce.app.repository.CustomerRepository;
@@ -41,7 +41,7 @@ public class CustomerService {
         return customer;
     }
 
-    public void modify(CustomerContext context, ModifyForm modifyForm) {
+    public void modify(CustomerContext context, ModifyCustomerVO modifyForm) {
         Customer customer = customerRepository.findByUsername(context.getUsername()).orElseThrow(
                 () -> new DataNotFoundException("Customer Not Found"));
 

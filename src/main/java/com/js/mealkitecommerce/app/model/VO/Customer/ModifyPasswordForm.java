@@ -1,4 +1,4 @@
-package com.js.mealkitecommerce.app.dto.Customer;
+package com.js.mealkitecommerce.app.model.VO.Customer;
 
 import lombok.Data;
 

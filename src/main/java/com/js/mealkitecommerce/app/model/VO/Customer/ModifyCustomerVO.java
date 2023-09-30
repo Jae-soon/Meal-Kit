@@ -1,4 +1,4 @@
-package com.js.mealkitecommerce.app.dto.Customer;
+package com.js.mealkitecommerce.app.model.VO.Customer;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class ModifyForm {
+public class ModifyCustomerVO {
     @NotBlank(message = "아이디를 입력해주세요.")
     private String username;
 

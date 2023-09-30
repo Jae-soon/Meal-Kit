@@ -1,6 +1,6 @@
 package com.js.mealkitecommerce.app.global.security;
 
-import com.js.mealkitecommerce.app.dto.context.CustomerContext;
+import com.js.mealkitecommerce.app.model.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
 import com.js.mealkitecommerce.app.exception.UserIdNotFountException;
 import com.js.mealkitecommerce.app.global.UserRole;

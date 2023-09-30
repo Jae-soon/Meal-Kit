@@ -1,6 +1,6 @@
 package com.js.mealkitecommerce.app.global.initData;
 
-import com.js.mealkitecommerce.app.dto.Customer.JoinForm;
+import com.js.mealkitecommerce.app.model.VO.Customer.JoinForm;
 import com.js.mealkitecommerce.app.service.CustomerService;
 
 public interface InitDataBefore {

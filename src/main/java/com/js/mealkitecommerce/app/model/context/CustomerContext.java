@@ -1,4 +1,4 @@
-package com.js.mealkitecommerce.app.dto.context;
+package com.js.mealkitecommerce.app.model.context;
 
 import com.js.mealkitecommerce.app.entity.Customer;
 import lombok.Getter;

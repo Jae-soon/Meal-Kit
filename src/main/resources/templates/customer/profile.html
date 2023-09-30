@@ -10,5 +10,6 @@
 <form name="logoutForm" th:action="@{/customer/logout}" method="post" hidden></form>
 <a href="/customer/modify" class="inline-flex" sec:authorize="isAuthenticated()">정보수정</a>
 <a href="/customer/modifyPassword" class="inline-flex" sec:authorize="isAuthenticated()">비밀번호 변경</a>
+<a href="/" class="inline-flex">홈으로</a>
 
 

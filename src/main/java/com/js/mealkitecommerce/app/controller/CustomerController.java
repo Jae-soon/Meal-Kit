@@ -1,7 +1,7 @@
 package com.js.mealkitecommerce.app.controller;
 
-import com.js.mealkitecommerce.app.dto.Customer.*;
-import com.js.mealkitecommerce.app.dto.context.CustomerContext;
+import com.js.mealkitecommerce.app.model.VO.Customer.*;
+import com.js.mealkitecommerce.app.model.context.CustomerContext;
 import com.js.mealkitecommerce.app.entity.Customer;
 import com.js.mealkitecommerce.app.exception.DataNotFoundException;
 import com.js.mealkitecommerce.app.exception.EmailDuplicatedException;
@@ -36,6 +36,8 @@ public class CustomerController {
 
     private final EmailService emailService;
 
+    // model과 attributeModel의 차이점 : 데이터를 불러오고 싶을 경우 modelattribute 어노테이션 사용
+    // 데이터를 전송할 때에는 웬만하면 model 을 사용하는 것이 맞음
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public String showProfile(@AuthenticationPrincipal CustomerContext context, Model model) {
@@ -106,13 +108,19 @@ public class CustomerController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify")
-    public String showModify(@ModelAttribute ModifyForm modifyForm) {
+    public String showModify(@AuthenticationPrincipal CustomerContext context, Model model) {
+        Customer customer = customerService.findByUsername(context.getUsername()).orElseThrow(
+                () -> new DataNotFoundException("Customer Not Found")
+        );
+
+        model.addAttribute("c", customer);
+
         return "customer/modify";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify")
-    public String modify(@AuthenticationPrincipal CustomerContext context, @Valid ModifyForm modifyForm, BindingResult bindingResult) {
+    public String modify(@AuthenticationPrincipal CustomerContext context, @Valid ModifyCustomerVO modifyForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "customer/modify";
         }
