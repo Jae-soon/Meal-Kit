@@ -1,94 +1,52 @@
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{global/layouts/layout}">
 
-<script>
-    function checkDuplicateUsername() {
-        var username = document.getElementById("username");
-        var usernameValue = username.value;
+<div layout:fragment="content">
+    <h1>회원가입 폼</h1>
 
-        $.ajax({
-            url : "checkUsername",
-            data : {
-                "param" : usernameValue
-            },
-            success : function rstData(data) {
-                console.log(data)
-                if(data.id != null) {
-                    alert("즁복된 아이디가 있습니다");
-                    emailValue = "";
-                } else {
-                    alert("사용 가능한 아이디입니다!");
-                }
-            }
-        })
-    }
+    <form id="joinForm" th:action="@{/customer/join}" th:object="${joinForm}" method="post">
+        <div>
+            <span>이름</span>
+            <input type="text" th:field="*{name}" placeholder="이름을 입력해주세요.">
+        </div>
+        <div>
+            <span>아이디</span>
+            <input id="username" type="text" th:field="*{username}" placeholder="아이디를 입력해주세요.">
+            <input type="button" value="중복 확인" onclick="checkDuplicateUsername()">
+        </div>
+        <div>
+            <span>비밀번호</span>
+            <input id="pw" type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요.">
+        </div>
+        <div>
+            <span>비밀번호 확인</span>
+            <input id="pwConfirm" type="password" th:field="*{passwordConfirm}" placeholder="비밀번호를 한번 더 입력해주세요.">
+        </div>
+        <div>
+            <span>이메일</span>
+            <input id="email" type="text" th:field="*{email}" placeholder="이메일을 입력해주세요.">
+            <input type="button" value="중복 확인" onclick="checkDuplicateEmail()">
+        </div>
+        <div>
+            <span>주소</span>
+            <input type="text" th:field="*{address}" placeholder="주소를 입력해주세요.">
+        </div>
+        <div>
+            <span>전화번호</span>
+            <input type="text" th:field="*{tel}" placeholder="'-' 뺴고 입력해주세요">
+        </div>
+        <div>
+            <input type="button" value="회원가입" onclick="join()"/>
+        </div>
+        <a href="/" class="inline-flex">홈으로</a>
+    </form>
+</div>
 
-    function checkDuplicateEmail() {
-        var email = document.getElementById("email");
-        var emailValue = email.value;
-        $.ajax({
-            url : "checkEmail",
-            data : {
-                "param" : emailValue
-            },
-            success : function rstData(data) {
-                if(data.id != null) {
-                    alert("즁복된 이메일이 있습니다");
-                    emailValue = "";
-                } else {
-                    alert("사용 가능한 이메일입니다!");
-                }
-            }
-        })
-    }
+<div layout:fragment="script">
+    <script th:inline="javascript" type="text/javascript" th:src="@{/js/customer/join.js}"></script>
+</div>
 
-    function join() {
-        const pw = document.getElementById("pw").value;
-        const pwConfirm = document.getElementById("pwConfirm").value;
-
-        if (pw != pwConfirm) {
-            alert("비밀번호가 맞지 않습니다.")
-        } else {
-            document.getElementById("joinForm").submit();
-            alert("회원가입이 완료되었습니다.")
-        }
-    }
-</script>
-
-<h1>회원가입 폼</h1>
-
-<form id="joinForm" th:action="@{/customer/join}" th:object="${joinForm}" method="post">
-    <div>
-        <span>이름</span>
-        <input type="text" th:field="*{name}" placeholder="이름을 입력해주세요.">
-    </div>
-    <div>
-        <span>아이디</span>
-        <input id="username" type="text" th:field="*{username}" placeholder="아이디를 입력해주세요.">
-        <input type="button" value="중복 확인" onclick="checkDuplicateUsername()">
-    </div>
-    <div>
-        <span>비밀번호</span>
-        <input id="pw" type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요.">
-    </div>
-    <div>
-        <span>비밀번호 확인</span>
-        <input id="pwConfirm" type="password" th:field="*{passwordConfirm}" placeholder="비밀번호를 한번 더 입력해주세요.">
-    </div>
-    <div>
-        <span>이메일</span>
-        <input id="email" type="text" th:field="*{email}" placeholder="이메일을 입력해주세요.">
-        <input type="button" value="중복 확인" onclick="checkDuplicateEmail()">
-    </div>
-    <div>
-        <span>주소</span>
-        <input type="text" th:field="*{address}" placeholder="주소를 입력해주세요.">
-    </div>
-    <div>
-        <span>전화번호</span>
-        <input type="text" th:field="*{tel}" placeholder="'-' 뺴고 입력해주세요">
-    </div>
-    <div>
-        <input type="button" value="회원가입" onclick="join()"/>
-    </div>
-    <a href="/" class="inline-flex">홈으로</a>
-</form>
+</html>
