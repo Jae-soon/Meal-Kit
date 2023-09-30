@@ -41,7 +41,7 @@ public class CustomerService {
         return customer;
     }
 
-    public void modify(CustomerContext context, ModifyCustomerVO modifyForm) {
+    public void modify(CustomerContext context, Customer modifyForm) {
         Customer customer = customerRepository.findByUsername(context.getUsername()).orElseThrow(
                 () -> new DataNotFoundException("Customer Not Found"));
 

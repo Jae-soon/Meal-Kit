@@ -23,7 +23,6 @@ public class SecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         Customer customer = customerRepository.findByUsername(username).orElseThrow(
                 () -> new UserIdNotFountException("존재하는 회원이 없습니다.")
         );

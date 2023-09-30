@@ -120,19 +120,10 @@ public class CustomerController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify")
-    public String modify(@AuthenticationPrincipal CustomerContext context, @Valid ModifyCustomerVO modifyForm, BindingResult bindingResult) {
+    public String modify(@AuthenticationPrincipal CustomerContext context, @Valid Customer modifyForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "customer/modify";
         }
-
-        if (customerService.findByUsername(modifyForm.getUsername()).isPresent()) {
-            throw new UserIdDuplicatedException("중복된 아이디가 존재합니다.");
-        }
-
-        if (customerService.findByEmail(modifyForm.getEmail()).isPresent()) {
-            throw new EmailDuplicatedException("중복된 이메일이 존재합니다.");
-        }
-
 
         try {
             customerService.modify(context, modifyForm);
@@ -143,8 +134,7 @@ public class CustomerController {
             bindingResult.reject("UserIdDuplicatedException", e.getMessage());
         }
 
-        String modifyMsg = Util.url.encode("회원정보 수정이 완료되었습니다");
-        return "redirect:/customer/profile?msg=%s".formatted(modifyMsg);
+        return "redirect:/customer/profile";
     }
 
     @PreAuthorize("isAuthenticated()")

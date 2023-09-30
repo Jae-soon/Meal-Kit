@@ -16,23 +16,19 @@
 <form id="modifyForm" th:action="@{/customer/modify}" method="post">
     <div>
         <span>이름</span>
-        <input type="text" th:value="${c.name}" placeholder="이름을 입력해주세요.">
-    </div>
-    <div>
-        <span>아이디</span>
-        <input type="text" th:value="${c.username}" placeholder="아이디를 입력해주세요.">
+        <input type="text" th:field="${c.name}" placeholder="이름을 입력해주세요.">
     </div>
     <div>
         <span>이메일</span>
-        <input type="text" th:value="${c.email}" placeholder="이메일을 입력해주세요.">
+        <input type="text" th:field="${c.email}" placeholder="이메일을 입력해주세요.">
     </div>
     <div>
         <span>주소</span>
-        <input type="text" th:value="${c.address}" placeholder="주소를 입력해주세요.">
+        <input type="text" th:field="${c.address}" placeholder="주소를 입력해주세요.">
     </div>
     <div>
         <span>전화번호</span>
-        <input type="text" th:value="${c.tel}" placeholder="'-' 뺴고 입력해주세요">
+        <input type="text" th:field="${c.tel}" placeholder="'-' 뺴고 입력해주세요">
     </div>
     <div>
         <input type="button" value="수정" onclick="modifyConfirm()"/>
