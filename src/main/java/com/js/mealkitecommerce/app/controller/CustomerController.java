@@ -72,24 +72,6 @@ public class CustomerController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
     public String join(HttpServletRequest req, @Valid JoinRequestVO joinForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "customer/join";
-        }
-
-        if (customerService.findByUsername(joinForm.getUsername()).isPresent()) {
-            throw new UserIdDuplicatedException("중복된 아이디가 존재합니다.");
-        }
-
-        if (customerService.findByEmail(joinForm.getEmail()).isPresent()) {
-            throw new EmailDuplicatedException("중복된 이메일이 존재합니다.");
-        }
-
-        if (!joinForm.getPassword().equals(joinForm.getPasswordConfirm())) {
-            bindingResult.rejectValue("passwordConfirm", "passwordInCorrect",
-                    "2개의 패스워드가 일치하지 않습니다.");
-            return "customer/join";
-        }
-
         try {
             customerService.join(joinForm);
         } catch (EmailDuplicatedException e) {

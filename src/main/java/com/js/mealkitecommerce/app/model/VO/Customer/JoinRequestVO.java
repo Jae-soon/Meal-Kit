@@ -28,6 +28,8 @@ public class JoinRequestVO {
     @NotBlank(message = "주소를 입력해주세요.")
     private String address;
 
+    private String address2;
+
     @NotBlank(message = "전화번호를 입력해주세요.")
     private String tel;
 }

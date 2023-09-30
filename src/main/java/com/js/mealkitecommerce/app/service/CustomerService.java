@@ -31,7 +31,7 @@ public class CustomerService {
                 .username(joinForm.getUsername())
                 .password(passwordEncoder.encode(joinForm.getPassword()))
                 .email(joinForm.getEmail())
-                .address(joinForm.getAddress())
+                .address(joinForm.getAddress() + " " + joinForm.getAddress2())
                 .tel(joinForm.getTel())
                 .build();
 
