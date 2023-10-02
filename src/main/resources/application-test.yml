@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://${testDbIp:127.0.0.1}:3306/mealKit_test?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${testDbIp:127.0.0.1}:3306/mealKit_test?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: ${testDbId:root}
     password: ${testDbPw:1111}
   jpa:

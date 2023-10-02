@@ -1,16 +1,29 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       th:fragment="navbarFragment">
-
-    <div>
-        <a href="/">logo</a>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">LOGO</a>
+        <button style="border: black" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer/profile" sec:authorize="isAuthenticated()">프로필</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer/login" sec:authorize="isAnonymous()">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer/join" sec:authorize="isAnonymous()">회원가입</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: document.logoutForm.submit();" sec:authorize="isAuthenticated()">로그아웃</a>
+                    <form name="logoutForm" th:action="@{/customer/logout}" method="post" hidden></form>
+                </li>
+            </ul>
+        </div>
     </div>
-
-    <nav>
-        <a href="/customer/profile" class="inline-flex" sec:authorize="isAuthenticated()">프로필</a>
-        <a href="/customer/login" class="inline-flex" sec:authorize="isAnonymous()">로그인</a>
-        <a href="/customer/join" class="inline-flex" sec:authorize="isAnonymous()">회원가입</a>
-        <a href="javascript: document.logoutForm.submit();" class="inline-flex" sec:authorize="isAuthenticated()">로그아웃</a>
-        <form name="logoutForm" th:action="@{/customer/logout}" method="post" hidden></form>
-    </nav>
+</nav>
 </html>
