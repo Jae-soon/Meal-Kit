@@ -8,13 +8,13 @@
     <div class="container">
         <div class="login-box">
             <div id="loginBoxTitle">Meal-Commerce</div>
-            <form th:action="@{/customer/findUsername}" th:object="${findUsernameForm}" method="POST">
+            <form id="findForm" th:action="@{/customer/findUsername}" th:object="${findUsernameForm}" method="POST">
                 <div class="form-group">
                     <label>이메일</label>
-                    <input type="email" class="form-control" th:field="*{email}" style="text-transform:uppercase;ime-mode:disabled">
+                    <input type="email" class="form-control" th:field="*{email}" style="ime-mode:disabled">
                 </div>
                 <div id="login-btn-box">
-                    <div style=""><input type="submit" id="btnLogin" value="아이디 찾기" class="btn btn-primary" style="margin-left: 180px"></div>
+                    <div style=""><button class="btn btn-primary" style="margin-left: 180px" onclick="findCheck()">아이디 찾기</button></div>
                 </div>
                 <div class="find-id">
                     아이디 : <span th:if="${customer != null}" th:text="${customer.username}"></span>
