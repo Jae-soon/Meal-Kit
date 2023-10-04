@@ -5,21 +5,23 @@
         layout:decorate="~{global/layouts/layout}">
 
 <div layout:fragment="content">
-<h1>아이디 찾기</h1>
-
-<form th:action="@{/customer/findUsername}" th:object="${findUsernameForm}" method="POST">
-    <div th:replace="~{/global/form_errors :: formErrorsFragment}"></div>
-    <div>
-        <span>이메일</span>
-        <input type="email" th:field="*{email}">
+    <div class="container">
+        <div class="login-box">
+            <div id="loginBoxTitle">Meal-Commerce</div>
+            <form th:action="@{/customer/findUsername}" th:object="${findUsernameForm}" method="POST">
+                <div class="form-group">
+                    <label>이메일</label>
+                    <input type="email" class="form-control" th:field="*{email}" style="text-transform:uppercase;ime-mode:disabled">
+                </div>
+                <div id="login-btn-box">
+                    <div style=""><input type="submit" id="btnLogin" value="아이디 찾기" class="btn btn-primary" style="margin-left: 180px"></div>
+                </div>
+                <div class="find-id">
+                    아이디 : <span th:if="${customer != null}" th:text="${customer.username}"></span>
+                </div>
+            </form>
+        </div>
+        <div class="findUsername-menu-box"></div>
     </div>
-    <div>
-        <span>찾기</span>
-        <input type="submit" value="찾기">
-    </div>\
-    <a href="/" class="inline-flex">홈으로</a>
-</form>
-
-<span th:if="${customer != null}" th:text="${customer.username}"></span>
 </div>
 </html>
